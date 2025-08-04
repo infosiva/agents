@@ -1,0 +1,458 @@
+{
+  "searches": [
+    {
+      "timestamp": "2025-07-24T09:07:03.225Z",
+      "cheapestPrice": 1718,
+      "cheapestResult": {
+        "price": 1718,
+        "currency": "GBP",
+        "airline": "Turkish Airlines",
+        "departureTime": "2025-07-25T09:07:03.225Z",
+        "arrivalTime": "2025-07-25T17:07:03.225Z",
+        "duration": 686,
+        "stops": 2,
+        "deepLink": "https://example.com/book-flight-0",
+        "type": "flight"
+      },
+      "allResults": [
+        {
+          "price": 1718,
+          "currency": "GBP",
+          "airline": "Turkish Airlines",
+          "departureTime": "2025-07-25T09:07:03.225Z",
+          "arrivalTime": "2025-07-25T17:07:03.225Z",
+          "duration": 686,
+          "stops": 2,
+          "deepLink": "https://example.com/book-flight-0",
+          "type": "flight"
+        },
+        {
+          "price": 1770,
+          "currency": "GBP",
+          "airline": "Virgin Atlantic",
+          "departureTime": "2025-07-27T09:07:03.225Z",
+          "arrivalTime": "2025-07-27T17:07:03.225Z",
+          "duration": 686,
+          "stops": 2,
+          "deepLink": "https://example.com/book-flight-2",
+          "type": "flight"
+        },
+        {
+          "price": 1806,
+          "currency": "GBP",
+          "airline": "Turkish Airlines",
+          "departureTime": "2025-07-26T09:07:03.225Z",
+          "arrivalTime": "2025-07-26T17:07:03.225Z",
+          "duration": 649,
+          "stops": 2,
+          "deepLink": "https://example.com/book-flight-1",
+          "type": "flight"
+        },
+        {
+          "price": 1832,
+          "currency": "GBP",
+          "airline": "Virgin Atlantic",
+          "departureTime": "2025-07-29T09:07:03.225Z",
+          "arrivalTime": "2025-07-29T17:07:03.225Z",
+          "duration": 501,
+          "stops": 0,
+          "deepLink": "https://example.com/book-flight-4",
+          "type": "flight"
+        },
+        {
+          "price": 1848,
+          "currency": "GBP",
+          "airline": "Qatar Airways",
+          "departureTime": "2025-07-28T09:07:03.225Z",
+          "arrivalTime": "2025-07-28T17:07:03.225Z",
+          "duration": 580,
+          "stops": 1,
+          "deepLink": "https://example.com/book-flight-3",
+          "type": "flight"
+        }
+      ],
+      "averagePrice": 1794.8
+    },
+    {
+      "timestamp": "2025-07-24T09:09:36.401Z",
+      "cheapestPrice": 1083,
+      "cheapestResult": {
+        "price": 1083,
+        "currency": "GBP",
+        "airline": "Emirates",
+        "departureTime": "2025-07-29T09:09:36.400Z",
+        "arrivalTime": "2025-07-29T17:09:36.400Z",
+        "duration": 529,
+        "stops": 1,
+        "deepLink": "https://example.com/book-flight-4",
+        "type": "flight"
+      },
+      "allResults": [
+        {
+          "price": 1083,
+          "currency": "GBP",
+          "airline": "Emirates",
+          "departureTime": "2025-07-29T09:09:36.400Z",
+          "arrivalTime": "2025-07-29T17:09:36.400Z",
+          "duration": 529,
+          "stops": 1,
+          "deepLink": "https://example.com/book-flight-4",
+          "type": "flight"
+        },
+        {
+          "price": 1084,
+          "currency": "GBP",
+          "airline": "Emirates",
+          "departureTime": "2025-07-28T09:09:36.400Z",
+          "arrivalTime": "2025-07-28T17:09:36.400Z",
+          "duration": 695,
+          "stops": 0,
+          "deepLink": "https://example.com/book-flight-3",
+          "type": "flight"
+        },
+        {
+          "price": 1101,
+          "currency": "GBP",
+          "airline": "British Airways",
+          "departureTime": "2025-07-27T09:09:36.400Z",
+          "arrivalTime": "2025-07-27T17:09:36.400Z",
+          "duration": 650,
+          "stops": 1,
+          "deepLink": "https://example.com/book-flight-2",
+          "type": "flight"
+        },
+        {
+          "price": 1191,
+          "currency": "GBP",
+          "airline": "Virgin Atlantic",
+          "departureTime": "2025-07-26T09:09:36.400Z",
+          "arrivalTime": "2025-07-26T17:09:36.400Z",
+          "duration": 586,
+          "stops": 1,
+          "deepLink": "https://example.com/book-flight-1",
+          "type": "flight"
+        },
+        {
+          "price": 1214,
+          "currency": "GBP",
+          "airline": "Qatar Airways",
+          "departureTime": "2025-07-25T09:09:36.400Z",
+          "arrivalTime": "2025-07-25T17:09:36.400Z",
+          "duration": 701,
+          "stops": 0,
+          "deepLink": "https://example.com/book-flight-0",
+          "type": "flight"
+        }
+      ],
+      "averagePrice": 1134.6
+    },
+    {
+      "timestamp": "2025-07-24T09:10:44.215Z",
+      "cheapestPrice": 1151,
+      "cheapestResult": {
+        "price": 1151,
+        "currency": "GBP",
+        "airline": "Emirates",
+        "departureTime": "2025-07-26T09:10:44.214Z",
+        "arrivalTime": "2025-07-26T17:10:44.214Z",
+        "duration": 712,
+        "stops": 1,
+        "deepLink": "https://example.com/book-flight-1",
+        "type": "flight"
+      },
+      "allResults": [
+        {
+          "price": 1151,
+          "currency": "GBP",
+          "airline": "Emirates",
+          "departureTime": "2025-07-26T09:10:44.214Z",
+          "arrivalTime": "2025-07-26T17:10:44.214Z",
+          "duration": 712,
+          "stops": 1,
+          "deepLink": "https://example.com/book-flight-1",
+          "type": "flight"
+        },
+        {
+          "price": 1152,
+          "currency": "GBP",
+          "airline": "Turkish Airlines",
+          "departureTime": "2025-07-25T09:10:44.214Z",
+          "arrivalTime": "2025-07-25T17:10:44.214Z",
+          "duration": 621,
+          "stops": 0,
+          "deepLink": "https://example.com/book-flight-0",
+          "type": "flight"
+        },
+        {
+          "price": 1186,
+          "currency": "GBP",
+          "airline": "Virgin Atlantic",
+          "departureTime": "2025-07-27T09:10:44.214Z",
+          "arrivalTime": "2025-07-27T17:10:44.214Z",
+          "duration": 644,
+          "stops": 0,
+          "deepLink": "https://example.com/book-flight-2",
+          "type": "flight"
+        },
+        {
+          "price": 1188,
+          "currency": "GBP",
+          "airline": "Qatar Airways",
+          "departureTime": "2025-07-28T09:10:44.214Z",
+          "arrivalTime": "2025-07-28T17:10:44.214Z",
+          "duration": 562,
+          "stops": 0,
+          "deepLink": "https://example.com/book-flight-3",
+          "type": "flight"
+        },
+        {
+          "price": 1216,
+          "currency": "GBP",
+          "airline": "Virgin Atlantic",
+          "departureTime": "2025-07-29T09:10:44.214Z",
+          "arrivalTime": "2025-07-29T17:10:44.214Z",
+          "duration": 626,
+          "stops": 2,
+          "deepLink": "https://example.com/book-flight-4",
+          "type": "flight"
+        }
+      ],
+      "averagePrice": 1178.6
+    },
+    {
+      "timestamp": "2025-07-24T09:10:44.358Z",
+      "cheapestPrice": 1024,
+      "cheapestResult": {
+        "price": 1024,
+        "currency": "GBP",
+        "airline": "Virgin Atlantic",
+        "departureTime": "2025-07-29T09:10:44.358Z",
+        "arrivalTime": "2025-07-29T17:10:44.358Z",
+        "duration": 620,
+        "stops": 1,
+        "deepLink": "https://example.com/book-flight-4",
+        "type": "flight"
+      },
+      "allResults": [
+        {
+          "price": 1024,
+          "currency": "GBP",
+          "airline": "Virgin Atlantic",
+          "departureTime": "2025-07-29T09:10:44.358Z",
+          "arrivalTime": "2025-07-29T17:10:44.358Z",
+          "duration": 620,
+          "stops": 1,
+          "deepLink": "https://example.com/book-flight-4",
+          "type": "flight"
+        },
+        {
+          "price": 1026,
+          "currency": "GBP",
+          "airline": "Turkish Airlines",
+          "departureTime": "2025-07-28T09:10:44.358Z",
+          "arrivalTime": "2025-07-28T17:10:44.358Z",
+          "duration": 503,
+          "stops": 1,
+          "deepLink": "https://example.com/book-flight-3",
+          "type": "flight"
+        },
+        {
+          "price": 1062,
+          "currency": "GBP",
+          "airline": "Qatar Airways",
+          "departureTime": "2025-07-26T09:10:44.358Z",
+          "arrivalTime": "2025-07-26T17:10:44.358Z",
+          "duration": 517,
+          "stops": 2,
+          "deepLink": "https://example.com/book-flight-1",
+          "type": "flight"
+        },
+        {
+          "price": 1154,
+          "currency": "GBP",
+          "airline": "Turkish Airlines",
+          "departureTime": "2025-07-27T09:10:44.358Z",
+          "arrivalTime": "2025-07-27T17:10:44.358Z",
+          "duration": 504,
+          "stops": 0,
+          "deepLink": "https://example.com/book-flight-2",
+          "type": "flight"
+        },
+        {
+          "price": 1199,
+          "currency": "GBP",
+          "airline": "British Airways",
+          "departureTime": "2025-07-25T09:10:44.358Z",
+          "arrivalTime": "2025-07-25T17:10:44.358Z",
+          "duration": 602,
+          "stops": 0,
+          "deepLink": "https://example.com/book-flight-0",
+          "type": "flight"
+        }
+      ],
+      "averagePrice": 1093
+    },
+    {
+      "timestamp": "2025-07-24T09:14:33.246Z",
+      "cheapestPrice": 1028,
+      "cheapestResult": {
+        "price": 1028,
+        "currency": "GBP",
+        "airline": "Turkish Airlines",
+        "departureTime": "2025-07-28T09:14:33.243Z",
+        "arrivalTime": "2025-07-28T17:14:33.243Z",
+        "duration": 631,
+        "stops": 0,
+        "deepLink": "https://example.com/book-flight-3",
+        "type": "flight"
+      },
+      "allResults": [
+        {
+          "price": 1028,
+          "currency": "GBP",
+          "airline": "Turkish Airlines",
+          "departureTime": "2025-07-28T09:14:33.243Z",
+          "arrivalTime": "2025-07-28T17:14:33.243Z",
+          "duration": 631,
+          "stops": 0,
+          "deepLink": "https://example.com/book-flight-3",
+          "type": "flight"
+        },
+        {
+          "price": 1031,
+          "currency": "GBP",
+          "airline": "Emirates",
+          "departureTime": "2025-07-27T09:14:33.243Z",
+          "arrivalTime": "2025-07-27T17:14:33.243Z",
+          "duration": 714,
+          "stops": 0,
+          "deepLink": "https://example.com/book-flight-2",
+          "type": "flight"
+        },
+        {
+          "price": 1047,
+          "currency": "GBP",
+          "airline": "Turkish Airlines",
+          "departureTime": "2025-07-25T09:14:33.243Z",
+          "arrivalTime": "2025-07-25T17:14:33.243Z",
+          "duration": 649,
+          "stops": 0,
+          "deepLink": "https://example.com/book-flight-0",
+          "type": "flight"
+        },
+        {
+          "price": 1089,
+          "currency": "GBP",
+          "airline": "Turkish Airlines",
+          "departureTime": "2025-07-29T09:14:33.243Z",
+          "arrivalTime": "2025-07-29T17:14:33.243Z",
+          "duration": 635,
+          "stops": 2,
+          "deepLink": "https://example.com/book-flight-4",
+          "type": "flight"
+        },
+        {
+          "price": 1210,
+          "currency": "GBP",
+          "airline": "Virgin Atlantic",
+          "departureTime": "2025-07-26T09:14:33.243Z",
+          "arrivalTime": "2025-07-26T17:14:33.243Z",
+          "duration": 620,
+          "stops": 1,
+          "deepLink": "https://example.com/book-flight-1",
+          "type": "flight"
+        }
+      ],
+      "averagePrice": 1081
+    },
+    {
+      "timestamp": "2025-07-24T09:34:57.874Z",
+      "cheapestPrice": 1043,
+      "cheapestResult": {
+        "price": 1043,
+        "currency": "GBP",
+        "airline": "Turkish Airlines",
+        "departureTime": "2025-07-25T09:34:57.872Z",
+        "arrivalTime": "2025-07-25T17:34:57.872Z",
+        "duration": 695,
+        "stops": 2,
+        "deepLink": "https://example.com/book-flight-0",
+        "type": "flight"
+      },
+      "allResults": [
+        {
+          "price": 1043,
+          "currency": "GBP",
+          "airline": "Turkish Airlines",
+          "departureTime": "2025-07-25T09:34:57.872Z",
+          "arrivalTime": "2025-07-25T17:34:57.872Z",
+          "duration": 695,
+          "stops": 2,
+          "deepLink": "https://example.com/book-flight-0",
+          "type": "flight"
+        },
+        {
+          "price": 1066,
+          "currency": "GBP",
+          "airline": "Turkish Airlines",
+          "departureTime": "2025-07-29T09:34:57.872Z",
+          "arrivalTime": "2025-07-29T17:34:57.872Z",
+          "duration": 538,
+          "stops": 1,
+          "deepLink": "https://example.com/book-flight-4",
+          "type": "flight"
+        },
+        {
+          "price": 1097,
+          "currency": "GBP",
+          "airline": "Emirates",
+          "departureTime": "2025-07-26T09:34:57.872Z",
+          "arrivalTime": "2025-07-26T17:34:57.872Z",
+          "duration": 679,
+          "stops": 1,
+          "deepLink": "https://example.com/book-flight-1",
+          "type": "flight"
+        },
+        {
+          "price": 1104,
+          "currency": "GBP",
+          "airline": "Virgin Atlantic",
+          "departureTime": "2025-07-27T09:34:57.872Z",
+          "arrivalTime": "2025-07-27T17:34:57.872Z",
+          "duration": 486,
+          "stops": 2,
+          "deepLink": "https://example.com/book-flight-2",
+          "type": "flight"
+        },
+        {
+          "price": 1175,
+          "currency": "GBP",
+          "airline": "Emirates",
+          "departureTime": "2025-07-28T09:34:57.872Z",
+          "arrivalTime": "2025-07-28T17:34:57.872Z",
+          "duration": 519,
+          "stops": 1,
+          "deepLink": "https://example.com/book-flight-3",
+          "type": "flight"
+        }
+      ],
+      "averagePrice": 1097
+    }
+  ],
+  "bestPrice": {
+    "price": 1024,
+    "result": {
+      "price": 1024,
+      "currency": "GBP",
+      "airline": "Virgin Atlantic",
+      "departureTime": "2025-07-29T09:10:44.358Z",
+      "arrivalTime": "2025-07-29T17:10:44.358Z",
+      "duration": 620,
+      "stops": 1,
+      "deepLink": "https://example.com/book-flight-4",
+      "type": "flight"
+    },
+    "timestamp": "2025-07-24T09:10:44.358Z"
+  },
+  "lastAlert": "2025-07-24T09:34:57.874Z"
+}

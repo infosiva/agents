@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Import - Flight Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { background: rgba(255,255,255,0.95); border-radius: 20px; padding: 30px; margin-top: 20px; }
+        .feature-card { background: white; border-radius: 15px; padding: 25px; margin-bottom: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .btn-primary { background: linear-gradient(45deg, #667eea, #764ba2); border: none; border-radius: 25px; }
+        .alert-info { background: #e7f3ff; border-left: 4px solid #007bff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">🚀 Auto Import Flight Data</h1>
+        
+        <!-- Bookmarklet Feature -->
+        <div class="feature-card">
+            <h2>📊 1. Browser Bookmarklet (Recommended)</h2>
+            <p>One-click capture from any flight booking website!</p>
+            
+            <div class="alert alert-info">
+                <strong>Drag this to your bookmarks bar:</strong><br>
+                <a href="javascript:(function(){var d=document;var s=d.createElement('script');s.src='http://localhost:3000/capture.js';s.onload=function(){FlightCapture.init();};d.head.appendChild(s);})();" 
+                   class="btn btn-primary mt-2">📊 Capture Flight</a>
+            </div>
+            
+            <h4>How to use:</h4>
+            <ol>
+                <li>Drag the button above to your browser's bookmarks bar</li>
+                <li>Go to Skyscanner, Google Flights, Kayak, etc.</li>
+                <li>Find a flight you like</li>
+                <li>Click the "📊 Capture Flight" bookmark</li>
+                <li>Review auto-detected data and save!</li>
+            </ol>
+        </div>
+        
+        <!-- URL Monitoring -->
+        <div class="feature-card">
+            <h2>🔗 2. URL Monitoring</h2>
+            <p>Paste flight search URLs and we'll try to extract the data automatically.</p>
+            
+            <div class="mb-3">
+                <label class="form-label">Paste a flight search URL:</label>
+                <input type="url" class="form-control" id="flightUrl" placeholder="https://www.skyscanner.com/...">
+            </div>
+            <button class="btn btn-primary" onclick="processUrl()">🔍 Extract Flight Data</button>
+            
+            <div id="urlResult" class="mt-3"></div>
+        </div>
+        
+        <!-- CSV Import -->
+        <div class="feature-card">
+            <h2>📋 3. CSV/Spreadsheet Import</h2>
+            <p>Import multiple flights from a CSV file or spreadsheet.</p>
+            
+            <div class="mb-3">
+                <label class="form-label">Upload CSV file:</label>
+                <input type="file" class="form-control" id="csvFile" accept=".csv,.txt" onchange="handleCsvUpload()">
+            </div>
+            
+            <div class="alert alert-info">
+                <strong>CSV Format:</strong> origin,destination,price,airline,departureDate,returnDate,source<br>
+                <strong>Example:</strong> LHR,LCA,1420,Turkish Airlines,2025-08-01,2025-08-06,Skyscanner
+            </div>
+            
+            <textarea class="form-control mb-3" rows="5" id="csvText" placeholder="Or paste CSV data here...
+LHR,LCA,1420,Turkish Airlines,2025-08-01,2025-08-06,Skyscanner
+LGW,TFS,1485,British Airways,2025-08-05,2025-08-10,Google Flights"></textarea>
+            
+            <button class="btn btn-primary" onclick="processCsv()">📊 Import Flights</button>
+            
+            <div id="csvResult" class="mt-3"></div>
+        </div>
+        
+        <!-- Clipboard Monitoring -->
+        <div class="feature-card">
+            <h2>📋 4. Smart Clipboard Monitor</h2>
+            <p>Automatically detect when you copy flight URLs or data.</p>
+            
+            <button class="btn btn-primary" id="clipboardBtn" onclick="startClipboardMonitoring()">
+                🎯 Start Monitoring Clipboard
+            </button>
+            
+            <div id="clipboardStatus" class="mt-3"></div>
+            
+            <div class="alert alert-info mt-3">
+                <strong>How it works:</strong> Copy any flight search URL, and we'll automatically try to extract the flight data and ask if you want to save it.
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-secondary">← Back to Flight Tracker</a>
+        </div>
+    </div>
+
+    <script>
+        // URL Processing
+        async function processUrl() {
+            const url = document.getElementById('flightUrl').value.trim();
+            const resultDiv = document.getElementById('urlResult');
+            
+            if (!url) {
+                resultDiv.innerHTML = '<div class="alert alert-warning">Please enter a URL</div>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<div class="alert alert-info">🔍 Processing URL...</div>';
+            
+            try {
+                // Extract data from URL parameters
+                const urlObj = new URL(url);
+                const params = urlObj.searchParams;
+                
+                const flightData = {
+                    origin: extractFromUrl(url, ['from', 'origin', 'originEntityId']) || '',
+                    destination: extractFromUrl(url, ['to', 'destination', 'destinationEntityId']) || '',
+                    departureDate: extractFromUrl(url, ['depart', 'departureDate', 'outboundDate']) || '',
+                    returnDate: extractFromUrl(url, ['return', 'returnDate', 'inboundDate']) || '',
+                    source: urlObj.hostname.replace('www.', ''),
+                    notes: 'Imported from URL: ' + url
+                };
+                
+                if (flightData.origin || flightData.destination) {
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-success">
+                            <h5>✅ Flight data extracted!</h5>
+                            <p><strong>From:</strong> ${flightData.origin || 'Not found'}</p>
+                            <p><strong>To:</strong> ${flightData.destination || 'Not found'}</p>
+                            <p><strong>Departure:</strong> ${flightData.departureDate || 'Not found'}</p>
+                            <p><strong>Source:</strong> ${flightData.source}</p>
+                            <button class="btn btn-primary" onclick="saveExtractedFlight(${JSON.stringify(flightData).replace(/"/g, '&quot;')})">💾 Save Flight</button>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = '<div class="alert alert-warning">⚠️ Could not extract flight data from this URL. Try the bookmarklet instead!</div>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="alert alert-danger">❌ Error processing URL: ${error.message}</div>`;
+            }
+        }
+        
+        function extractFromUrl(url, paramNames) {
+            const urlObj = new URL(url);
+            for (const param of paramNames) {
+                const value = urlObj.searchParams.get(param);
+                if (value) return value;
+            }
+            return null;
+        }
+        
+        // CSV Processing
+        function handleCsvUpload() {
+            const file = document.getElementById('csvFile').files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('csvText').value = e.target.result;
+                };
+                reader.readAsText(file);
+            }
+        }
+        
+        async function processCsv() {
+            const csvText = document.getElementById('csvText').value.trim();
+            const resultDiv = document.getElementById('csvResult');
+            
+            if (!csvText) {
+                resultDiv.innerHTML = '<div class="alert alert-warning">Please upload a file or paste CSV data</div>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<div class="alert alert-info">📊 Processing CSV data...</div>';
+            
+            try {
+                const lines = csvText.split('\n').filter(line => line.trim());
+                const flights = [];
+                let errors = [];
+                
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (!line) continue;
+                    
+                    const parts = line.split(',').map(p => p.trim());
+                    if (parts.length >= 3) {
+                        const flight = {
+                            origin: parts[0] || '',
+                            destination: parts[1] || '',
+                            price: parseFloat(parts[2]) || 0,
+                            airline: parts[3] || '',
+                            departureDate: parts[4] || '',
+                            returnDate: parts[5] || null,
+                            source: parts[6] || 'CSV Import',
+                            passengers: '2 adults + 2 children',
+                            notes: 'Imported from CSV'
+                        };
+                        
+                        if (flight.origin && flight.destination && flight.price > 0) {
+                            flights.push(flight);
+                        } else {
+                            errors.push(`Line ${i + 1}: Missing required data`);
+                        }
+                    } else {
+                        errors.push(`Line ${i + 1}: Not enough columns`);
+                    }
+                }
+                
+                // Import valid flights
+                let successCount = 0;
+                for (const flight of flights) {
+                    try {
+                        const response = await fetch('/api/flights', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(flight)
+                        });
+                        if (response.ok) successCount++;
+                    } catch (error) {
+                        errors.push(`Failed to save: ${flight.origin} → ${flight.destination}`);
+                    }
+                }
+                
+                let resultHtml = `<div class="alert alert-success">✅ Successfully imported ${successCount} flights!</div>`;
+                if (errors.length > 0) {
+                    resultHtml += `<div class="alert alert-warning">⚠️ Errors:<br>${errors.join('<br>')}</div>`;
+                }
+                
+                resultDiv.innerHTML = resultHtml;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="alert alert-danger">❌ Error processing CSV: ${error.message}</div>`;
+            }
+        }
+        
+        // Clipboard Monitoring
+        let clipboardInterval;
+        let lastClipboard = '';
+        
+        async function startClipboardMonitoring() {
+            const btn = document.getElementById('clipboardBtn');
+            const status = document.getElementById('clipboardStatus');
+            
+            if (clipboardInterval) {
+                // Stop monitoring
+                clearInterval(clipboardInterval);
+                clipboardInterval = null;
+                btn.textContent = '🎯 Start Monitoring Clipboard';
+                status.innerHTML = '';
+                return;
+            }
+            
+            // Check if clipboard API is available
+            if (!navigator.clipboard) {
+                status.innerHTML = '<div class="alert alert-danger">❌ Clipboard monitoring not supported in this browser</div>';
+                return;
+            }
+            
+            btn.textContent = '⏹️ Stop Monitoring';
+            status.innerHTML = '<div class="alert alert-info">👀 Monitoring clipboard for flight URLs...</div>';
+            
+            clipboardInterval = setInterval(async () => {
+                try {
+                    const text = await navigator.clipboard.readText();
+                    if (text !== lastClipboard && text.length > 10) {
+                        lastClipboard = text;
+                        
+                        // Check if it looks like a flight URL
+                        if (isFlightUrl(text)) {
+                            status.innerHTML = `
+                                <div class="alert alert-success">
+                                    ✈️ Flight URL detected!<br>
+                                    <strong>URL:</strong> ${text.substring(0, 100)}...<br>
+                                    <button class="btn btn-primary mt-2" onclick="document.getElementById('flightUrl').value='${text}'; processUrl();">📊 Extract Data</button>
+                                </div>
+                            `;
+                        }
+                    }
+                } catch (error) {
+                    // Clipboard access denied or not available
+                }
+            }, 2000);
+        }
+        
+        function isFlightUrl(text) {
+            const flightSites = ['skyscanner', 'google.com/flights', 'kayak', 'momondo', 'expedia', 'booking'];
+            return flightSites.some(site => text.toLowerCase().includes(site)) && text.startsWith('http');
+        }
+        
+        // Save extracted flight
+        async function saveExtractedFlight(flightData) {
+            try {
+                const response = await fetch('/api/flights', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(flightData)
+                });
+                
+                if (response.ok) {
+                    alert('✅ Flight saved successfully!');
+                } else {
+                    alert('❌ Failed to save flight');
+                }
+            } catch (error) {
+                alert('❌ Network error: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

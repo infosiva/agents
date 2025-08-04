@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛠️ Discovery Settings - Flight Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .main-container { background: rgba(255,255,255,0.95); border-radius: 20px; padding: 30px; margin: 20px auto; max-width: 900px; }
+        .header { background: linear-gradient(45deg, #28a745, #20c997); color: white; padding: 30px; border-radius: 20px 20px 0 0; text-align: center; margin: -30px -30px 30px -30px; }
+        .settings-card { background: white; border-radius: 15px; padding: 25px; margin-bottom: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .btn-primary { background: linear-gradient(45deg, #667eea, #764ba2); border: none; border-radius: 25px; }
+        .btn-success { background: linear-gradient(45deg, #28a745, #20c997); border: none; border-radius: 25px; }
+        .form-control { border-radius: 10px; border: 2px solid #e9ecef; padding: 12px 15px; }
+        .form-control:focus { border-color: #28a745; box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25); }
+        .destination-checkbox { margin: 10px 0; }
+        .destination-checkbox input[type="checkbox"] { margin-right: 10px; transform: scale(1.2); }
+        .alert-info { background: #e7f3ff; border-left: 4px solid #007bff; }
+        .current-settings { background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-container">
+            <div class="header">
+                <h1><i class="fas fa-cog"></i> Auto-Discovery Settings</h1>
+                <p>Customize your flight search preferences</p>
+            </div>
+            
+            <!-- Current Settings Display -->
+            <div class="current-settings">
+                <h4><i class="fas fa-info-circle"></i> Current Search Settings</h4>
+                <div id="currentSettings">
+                    <p><strong>Travelers:</strong> <span id="currentTravelers">2 adults + 2 children</span></p>
+                    <p><strong>Trip Duration:</strong> <span id="currentDuration">5 days</span></p>
+                    <p><strong>Date Range:</strong> <span id="currentDates">August 2025</span></p>
+                    <p><strong>Budget Range:</strong> <span id="currentBudget">£1750-£1800</span></p>
+                    <p><strong>Active Destinations:</strong> <span id="currentDestinations">15 destinations</span></p>
+                </div>
+            </div>
+
+            <form id="settingsForm">
+                <!-- Travel Dates -->
+                <div class="settings-card">
+                    <h3><i class="fas fa-calendar-alt text-primary"></i> Travel Dates</h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label">Earliest Departure</label>
+                            <input type="date" class="form-control" id="startDate" value="2025-08-01">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Latest Return</label>
+                            <input type="date" class="form-control" id="endDate" value="2025-08-31">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Trip Duration (days)</label>
+                            <select class="form-control" id="tripDuration">
+                                <option value="3">3 days (long weekend)</option>
+                                <option value="4">4 days (short break)</option>
+                                <option value="5" selected>5 days (work week)</option>
+                                <option value="7">7 days (full week)</option>
+                                <option value="10">10 days (extended trip)</option>
+                                <option value="14">14 days (two weeks)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="alert alert-info mt-3">
+                        <i class="fas fa-lightbulb"></i> The system will generate multiple date combinations within your range for the best deals.
+                    </div>
+                </div>
+
+                <!-- Travelers -->
+                <div class="settings-card">
+                    <h3><i class="fas fa-users text-success"></i> Travelers</h3>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="form-label">Adults</label>
+                            <select class="form-control" id="adults">
+                                <option value="1">1 Adult</option>
+                                <option value="2" selected>2 Adults</option>
+                                <option value="3">3 Adults</option>
+                                <option value="4">4 Adults</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Children (2-11)</label>
+                            <select class="form-control" id="children">
+                                <option value="0">0 Children</option>
+                                <option value="1">1 Child</option>
+                                <option value="2" selected>2 Children</option>
+                                <option value="3">3 Children</option>
+                                <option value="4">4 Children</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Infants (0-2)</label>
+                            <select class="form-control" id="infants">
+                                <option value="0" selected>0 Infants</option>
+                                <option value="1">1 Infant</option>
+                                <option value="2">2 Infants</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Rooms Needed</label>
+                            <select class="form-control" id="rooms">
+                                <option value="1">1 Room</option>
+                                <option value="2" selected>2 Rooms</option>
+                                <option value="3">3 Rooms</option>
+                                <option value="4">4 Rooms</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Budget Settings -->
+                <div class="settings-card">
+                    <h3><i class="fas fa-pound-sign text-warning"></i> Budget & Search Preferences</h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label">Maximum Budget per Person</label>
+                            <select class="form-control" id="budgetPerPerson">
+                                <option value="400">£400 (Budget travel)</option>
+                                <option value="500">£500 (Economy travel)</option>
+                                <option value="600" selected>£600 (Standard travel)</option>
+                                <option value="750">£750 (Comfortable travel)</option>
+                                <option value="1000">£1000 (Premium travel)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Cabin Class</label>
+                            <select class="form-control" id="cabinClass">
+                                <option value="economy" selected>Economy</option>
+                                <option value="premium_economy">Premium Economy</option>
+                                <option value="business">Business</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Search Type</label>
+                            <select class="form-control" id="searchType">
+                                <option value="flights" selected>Flights Only</option>
+                                <option value="packages">Flight + Hotel Packages</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <label class="form-label">Total Family Budget: <span id="totalBudget" class="fw-bold text-success">£2400</span></label>
+                        <div class="small text-muted">This is calculated automatically based on travelers and per-person budget</div>
+                    </div>
+                </div>
+
+                <!-- Destinations -->
+                <div class="settings-card">
+                    <h3><i class="fas fa-globe text-info"></i> Destinations to Search</h3>
+                    <p class="text-muted">Select which destinations you want to monitor for deals:</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>🏝️ Mediterranean & Islands</h5>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="dest-cyprus" checked>
+                                <label for="dest-cyprus">🇨🇾 Cyprus (Larnaca)</label>
+                            </div>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="dest-malta" checked>
+                                <label for="dest-malta">🇲🇹 Malta</label>
+                            </div>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="dest-crete" checked>
+                                <label for="dest-crete">🇬🇷 Crete (Heraklion)</label>
+                            </div>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="dest-athens" checked>
+                                <label for="dest-athens">🇬🇷 Athens</label>
+                            </div>
+                            
+                            <h5 class="mt-3">🇮🇨 Canary Islands</h5>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="dest-tenerife" checked>
+                                <label for="dest-tenerife">🏝️ Tenerife</label>
+                            </div>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="dest-grancanaria" checked>
+                                <label for="dest-grancanaria">🏝️ Gran Canaria</label>
+                            </div>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="dest-lanzarote" checked>
+                                <label for="dest-lanzarote">🏝️ Lanzarote</label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h5>🇹🇷 Turkey</h5>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="dest-antalya" checked>
+                                <label for="dest-antalya">🏖️ Antalya</label>
+                            </div>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="dest-istanbul" checked>
+                                <label for="dest-istanbul">🏛️ Istanbul</label>
+                            </div>
+                            
+                            <h5 class="mt-3">🌍 Other Destinations</h5>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="dest-morocco" checked>
+                                <label for="dest-morocco">🇲🇦 Morocco (Casablanca)</label>
+                            </div>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="dest-egypt" checked>
+                                <label for="dest-egypt">🇪🇬 Egypt (Hurghada)</label>
+                            </div>
+                            
+                            <h5 class="mt-3">✈️ UK Departure Airports</h5>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="airport-lhr" checked>
+                                <label for="airport-lhr">London Heathrow (LHR)</label>
+                            </div>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="airport-lgw" checked>
+                                <label for="airport-lgw">London Gatwick (LGW)</label>
+                            </div>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="airport-man" checked>
+                                <label for="airport-man">Manchester (MAN)</label>
+                            </div>
+                            <div class="destination-checkbox">
+                                <input type="checkbox" id="airport-stn">
+                                <label for="airport-stn">London Stansted (STN)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success btn-lg px-5">
+                        <i class="fas fa-save"></i> Save Settings & Restart Discovery
+                    </button>
+                    <a href="/deals.html" class="btn btn-secondary btn-lg px-4 ms-3">
+                        <i class="fas fa-arrow-left"></i> Back to Deals
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Update total budget calculation
+        function updateTotalBudget() {
+            const adults = parseInt(document.getElementById('adults').value);
+            const children = parseInt(document.getElementById('children').value);
+            const budgetPerPerson = parseInt(document.getElementById('budgetPerPerson').value);
+            
+            // Children typically cost 75% of adult price
+            const total = (adults * budgetPerPerson) + (children * budgetPerPerson * 0.75);
+            document.getElementById('totalBudget').textContent = `£${Math.round(total)}`;
+        }
+
+        // Update current settings display
+        function updateCurrentSettings() {
+            const adults = document.getElementById('adults').value;
+            const children = document.getElementById('children').value;
+            const infants = document.getElementById('infants').value;
+            const duration = document.getElementById('tripDuration').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            
+            let travelersText = `${adults} adult${adults > 1 ? 's' : ''}`;
+            if (children > 0) travelersText += ` + ${children} child${children > 1 ? 'ren' : ''}`;
+            if (infants > 0) travelersText += ` + ${infants} infant${infants > 1 ? 's' : ''}`;
+            
+            document.getElementById('currentTravelers').textContent = travelersText;
+            document.getElementById('currentDuration').textContent = `${duration} days`;
+            document.getElementById('currentDates').textContent = `${startDate} to ${endDate}`;
+            
+            updateTotalBudget();
+        }
+
+        // Event listeners
+        document.getElementById('adults').addEventListener('change', updateCurrentSettings);
+        document.getElementById('children').addEventListener('change', updateCurrentSettings);
+        document.getElementById('infants').addEventListener('change', updateCurrentSettings);
+        document.getElementById('budgetPerPerson').addEventListener('change', updateCurrentSettings);
+        document.getElementById('tripDuration').addEventListener('change', updateCurrentSettings);
+        document.getElementById('startDate').addEventListener('change', updateCurrentSettings);
+        document.getElementById('endDate').addEventListener('change', updateCurrentSettings);
+
+        // Form submission
+        document.getElementById('settingsForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Collect all settings
+            const settings = {
+                travelers: {
+                    adults: parseInt(document.getElementById('adults').value),
+                    children: parseInt(document.getElementById('children').value),
+                    infants: parseInt(document.getElementById('infants').value),
+                    rooms: parseInt(document.getElementById('rooms').value)
+                },
+                dates: {
+                    startDate: document.getElementById('startDate').value,
+                    endDate: document.getElementById('endDate').value,
+                    duration: parseInt(document.getElementById('tripDuration').value)
+                },
+                budget: {
+                    perPerson: parseInt(document.getElementById('budgetPerPerson').value),
+                    cabinClass: document.getElementById('cabinClass').value,
+                    searchType: document.getElementById('searchType').value
+                },
+                destinations: [],
+                airports: []
+            };
+            
+            // Collect selected destinations
+            const destCheckboxes = document.querySelectorAll('input[id^="dest-"]:checked');
+            destCheckboxes.forEach(cb => {
+                const destName = cb.id.replace('dest-', '');
+                settings.destinations.push(destName);
+            });
+            
+            // Collect selected airports
+            const airportCheckboxes = document.querySelectorAll('input[id^="airport-"]:checked');
+            airportCheckboxes.forEach(cb => {
+                const airportCode = cb.id.replace('airport-', '').toUpperCase();
+                settings.airports.push(airportCode);
+            });
+            
+            try {
+                // Save settings
+                const response = await fetch('/api/discovery/settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(settings)
+                });
+                
+                if (response.ok) {
+                    alert('✅ Settings saved successfully! Discovery will restart with your new preferences.');
+                    window.location.href = '/deals.html';
+                } else {
+                    alert('❌ Failed to save settings. Please try again.');
+                }
+            } catch (error) {
+                alert('❌ Error saving settings: ' + error.message);
+            }
+        });
+
+        // Load current settings from server
+        async function loadCurrentSettings() {
+            try {
+                const response = await fetch('/api/discovery/settings');
+                if (response.ok) {
+                    const settings = await response.json();
+                    
+                    // Populate form with current settings
+                    document.getElementById('adults').value = settings.travelers.adults;
+                    document.getElementById('children').value = settings.travelers.children;
+                    document.getElementById('infants').value = settings.travelers.infants;
+                    document.getElementById('rooms').value = settings.travelers.rooms;
+                    
+                    document.getElementById('startDate').value = settings.dates.startDate;
+                    document.getElementById('endDate').value = settings.dates.endDate;
+                    document.getElementById('tripDuration').value = settings.dates.duration;
+                    
+                    document.getElementById('budgetPerPerson').value = settings.budget.perPerson;
+                    document.getElementById('cabinClass').value = settings.budget.cabinClass;
+                    document.getElementById('searchType').value = settings.budget.searchType;
+                    
+                    // Set destination checkboxes
+                    settings.destinations.forEach(dest => {
+                        const checkbox = document.getElementById(`dest-${dest}`);
+                        if (checkbox) checkbox.checked = true;
+                    });
+                    
+                    // Set airport checkboxes
+                    settings.airports.forEach(airport => {
+                        const checkbox = document.getElementById(`airport-${airport.toLowerCase()}`);
+                        if (checkbox) checkbox.checked = true;
+                    });
+                    
+                    console.log('✅ Current settings loaded');
+                } else {
+                    console.warn('Could not load current settings, using defaults');
+                }
+            } catch (error) {
+                console.error('Error loading settings:', error);
+            }
+        }
+
+        // Initialize
+        loadCurrentSettings();
+        updateCurrentSettings();
+    </script>
+</body>
+</html>

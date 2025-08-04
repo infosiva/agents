@@ -1,0 +1,44 @@
+{
+  "travelers": {
+    "adults": 3,
+    "children": 1
+  },
+  "dates": {
+    "startDate": "2025-08-22",
+    "endDate": "2025-09-28"
+  },
+  "budget": {
+    "total": 1000,
+    "perPerson": 250
+  },
+  "destinations": [
+    {
+      "name": "Cyprus",
+      "code": "LCA"
+    },
+    {
+      "name": "Malta",
+      "code": "MLA"
+    },
+    {
+      "name": "Tenerife",
+      "code": "TFS"
+    },
+    {
+      "name": "Greece Crete",
+      "code": "HER"
+    },
+    {
+      "name": "Greece Athens",
+      "code": "ATH"
+    }
+  ],
+  "airports": [
+    "LHR",
+    "LGW",
+    "STN"
+  ],
+  "tripDuration": "7",
+  "minDealScore": 5,
+  "maxStops": 0
+}

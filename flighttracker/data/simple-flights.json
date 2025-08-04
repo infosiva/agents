@@ -1,0 +1,58 @@
+{
+  "flights": [
+    {
+      "id": "1",
+      "timestamp": "2025-07-24T09:14:34.241Z",
+      "origin": "LHR",
+      "destination": "Cyprus",
+      "price": 1024,
+      "passengers": "3 adults + 1 child",
+      "departureDate": "2025-09-18",
+      "returnDate": "2025-09-25",
+      "airline": "Virgin Atlantic",
+      "source": "Auto Discovery",
+      "notes": "Auto-discovered deal from Cyprus. Original price: £1024, Budget: £1500, Savings: £476. Score: 5/10"
+    },
+    {
+      "id": "2",
+      "timestamp": "2025-07-24T09:14:34.241Z",
+      "origin": "LHR",
+      "destination": "Cyprus",
+      "price": 1028,
+      "passengers": "3 adults + 1 child",
+      "departureDate": "2025-08-31",
+      "returnDate": "2025-09-07",
+      "airline": "Qatar Airways",
+      "source": "Auto Discovery",
+      "notes": "Auto-discovered deal from Cyprus. Original price: £1028, Budget: £1500, Savings: £472. Score: 5/10"
+    },
+    {
+      "id": "3",
+      "timestamp": "2025-07-24T09:14:34.241Z",
+      "origin": "LHR",
+      "destination": "Malta",
+      "price": 1030,
+      "passengers": "3 adults + 1 child",
+      "departureDate": "2025-09-03",
+      "returnDate": "2025-09-10",
+      "airline": "Emirates",
+      "source": "Auto Discovery",
+      "notes": "Auto-discovered deal from Malta. Original price: £1030, Budget: £1500, Savings: £470. Score: 5/10"
+    },
+    {
+      "id": "4",
+      "timestamp": "2025-07-24T09:14:34.241Z",
+      "origin": "LHR",
+      "destination": "Malta",
+      "price": 1036,
+      "passengers": "3 adults + 1 child",
+      "departureDate": "2025-08-31",
+      "returnDate": "2025-09-07",
+      "airline": "Qatar Airways",
+      "source": "Auto Discovery",
+      "notes": "Auto-discovered deal from Malta. Original price: £1036, Budget: £1500, Savings: £464. Score: 5/10"
+    }
+  ],
+  "nextId": 5,
+  "lastUpdated": "2025-07-24T09:14:34.241Z"
+}

@@ -1,0 +1,273 @@
+{
+  "searches": [
+    {
+      "timestamp": "2025-07-22T13:43:50.082Z",
+      "cheapestPrice": 1720,
+      "cheapestResult": {
+        "price": 1720,
+        "currency": "GBP",
+        "airline": "Virgin Atlantic",
+        "departureTime": "2025-07-25T13:43:50.081Z",
+        "arrivalTime": "2025-07-25T21:43:50.081Z",
+        "duration": 566,
+        "stops": 2,
+        "deepLink": "https://example.com/book-flight-2",
+        "type": "flight"
+      },
+      "allResults": [
+        {
+          "price": 1720,
+          "currency": "GBP",
+          "airline": "Virgin Atlantic",
+          "departureTime": "2025-07-25T13:43:50.081Z",
+          "arrivalTime": "2025-07-25T21:43:50.081Z",
+          "duration": 566,
+          "stops": 2,
+          "deepLink": "https://example.com/book-flight-2",
+          "type": "flight"
+        },
+        {
+          "price": 1723,
+          "currency": "GBP",
+          "airline": "Turkish Airlines",
+          "departureTime": "2025-07-24T13:43:50.081Z",
+          "arrivalTime": "2025-07-24T21:43:50.081Z",
+          "duration": 580,
+          "stops": 1,
+          "deepLink": "https://example.com/book-flight-1",
+          "type": "flight"
+        },
+        {
+          "price": 1817,
+          "currency": "GBP",
+          "airline": "Virgin Atlantic",
+          "departureTime": "2025-07-26T13:43:50.081Z",
+          "arrivalTime": "2025-07-26T21:43:50.081Z",
+          "duration": 621,
+          "stops": 1,
+          "deepLink": "https://example.com/book-flight-3",
+          "type": "flight"
+        },
+        {
+          "price": 1829,
+          "currency": "GBP",
+          "airline": "Emirates",
+          "departureTime": "2025-07-23T13:43:50.081Z",
+          "arrivalTime": "2025-07-23T21:43:50.081Z",
+          "duration": 711,
+          "stops": 0,
+          "deepLink": "https://example.com/book-flight-0",
+          "type": "flight"
+        },
+        {
+          "price": 1857,
+          "currency": "GBP",
+          "airline": "Virgin Atlantic",
+          "departureTime": "2025-07-27T13:43:50.081Z",
+          "arrivalTime": "2025-07-27T21:43:50.081Z",
+          "duration": 705,
+          "stops": 2,
+          "deepLink": "https://example.com/book-flight-4",
+          "type": "flight"
+        },
+        {
+          "id": "package-1",
+          "type": "package",
+          "totalPrice": 3290,
+          "originalPrice": 3495,
+          "savings": 205,
+          "currency": "GBP",
+          "flight": {
+            "airline": "Qatar Airways",
+            "price": 1527,
+            "departureTime": "2025-08-05T00:00:00.000Z",
+            "returnTime": "2025-08-12T00:00:00.000Z",
+            "duration": 566,
+            "stops": 2
+          },
+          "hotel": {
+            "name": "Beach Comfort Inn",
+            "price": 1968,
+            "rating": 3,
+            "pricePerNight": 281,
+            "amenities": [
+              "WiFi",
+              "Pool",
+              "Restaurant"
+            ],
+            "location": "City Center",
+            "rooms": 2
+          },
+          "packageProvider": "PackageDeals",
+          "deepLink": "https://example.com/book-package-1",
+          "included": [
+            "Flights",
+            "Hotel",
+            "Taxes"
+          ]
+        },
+        {
+          "id": "package-4",
+          "type": "package",
+          "totalPrice": 3365,
+          "originalPrice": 3529,
+          "savings": 164,
+          "currency": "GBP",
+          "flight": {
+            "airline": "Emirates",
+            "price": 1490,
+            "departureTime": "2025-08-05T00:00:00.000Z",
+            "returnTime": "2025-08-12T00:00:00.000Z",
+            "duration": 598,
+            "stops": 1
+          },
+          "hotel": {
+            "name": "Paradise Resort",
+            "price": 2039,
+            "rating": 3,
+            "pricePerNight": 291,
+            "amenities": [
+              "WiFi",
+              "Pool",
+              "Restaurant"
+            ],
+            "location": "City Center",
+            "rooms": 2
+          },
+          "packageProvider": "Booking.com",
+          "deepLink": "https://example.com/book-package-4",
+          "included": [
+            "Flights",
+            "Hotel",
+            "Taxes"
+          ]
+        },
+        {
+          "id": "package-0",
+          "type": "package",
+          "totalPrice": 3398,
+          "originalPrice": 3494,
+          "savings": 96,
+          "currency": "GBP",
+          "flight": {
+            "airline": "British Airways",
+            "price": 1491,
+            "departureTime": "2025-08-05T00:00:00.000Z",
+            "returnTime": "2025-08-12T00:00:00.000Z",
+            "duration": 576,
+            "stops": 1
+          },
+          "hotel": {
+            "name": "Beach Comfort Inn",
+            "price": 2003,
+            "rating": 3,
+            "pricePerNight": 286,
+            "amenities": [
+              "WiFi",
+              "Pool",
+              "Restaurant"
+            ],
+            "location": "City Center",
+            "rooms": 2
+          },
+          "packageProvider": "Expedia",
+          "deepLink": "https://example.com/book-package-0",
+          "included": [
+            "Flights",
+            "Hotel",
+            "Taxes"
+          ]
+        },
+        {
+          "id": "package-3",
+          "type": "package",
+          "totalPrice": 3481,
+          "originalPrice": 3636,
+          "savings": 155,
+          "currency": "GBP",
+          "flight": {
+            "airline": "Emirates",
+            "price": 1573,
+            "departureTime": "2025-08-05T00:00:00.000Z",
+            "returnTime": "2025-08-12T00:00:00.000Z",
+            "duration": 716,
+            "stops": 2
+          },
+          "hotel": {
+            "name": "Paradise Resort",
+            "price": 2063,
+            "rating": 3,
+            "pricePerNight": 294,
+            "amenities": [
+              "WiFi",
+              "Pool",
+              "Restaurant"
+            ],
+            "location": "Beach Area",
+            "rooms": 2
+          },
+          "packageProvider": "Expedia",
+          "deepLink": "https://example.com/book-package-3",
+          "included": [
+            "Flights",
+            "Hotel",
+            "Taxes"
+          ]
+        },
+        {
+          "id": "package-2",
+          "type": "package",
+          "totalPrice": 3623,
+          "originalPrice": 3712,
+          "savings": 89,
+          "currency": "GBP",
+          "flight": {
+            "airline": "Qatar Airways",
+            "price": 1641,
+            "departureTime": "2025-08-05T00:00:00.000Z",
+            "returnTime": "2025-08-12T00:00:00.000Z",
+            "duration": 679,
+            "stops": 1
+          },
+          "hotel": {
+            "name": "Ocean View Hotel",
+            "price": 2071,
+            "rating": 3,
+            "pricePerNight": 295,
+            "amenities": [
+              "WiFi",
+              "Pool",
+              "Restaurant"
+            ],
+            "location": "Beach Area",
+            "rooms": 2
+          },
+          "packageProvider": "TravelCity",
+          "deepLink": "https://example.com/book-package-2",
+          "included": [
+            "Flights",
+            "Hotel",
+            "Taxes"
+          ]
+        }
+      ],
+      "averagePrice": 2610.3
+    }
+  ],
+  "bestPrice": {
+    "price": 1720,
+    "result": {
+      "price": 1720,
+      "currency": "GBP",
+      "airline": "Virgin Atlantic",
+      "departureTime": "2025-07-25T13:43:50.081Z",
+      "arrivalTime": "2025-07-25T21:43:50.081Z",
+      "duration": 566,
+      "stops": 2,
+      "deepLink": "https://example.com/book-flight-2",
+      "type": "flight"
+    },
+    "timestamp": "2025-07-22T13:43:50.082Z"
+  },
+  "lastAlert": "2025-07-22T13:43:50.082Z"
+}

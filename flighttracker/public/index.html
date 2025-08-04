@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛫 Flight Price Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #8b94f2 0%, #9b87c7 100%);
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #2d3748;
+        }
+        
+        .main-container {
+            background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(139, 148, 242, 0.25), 0 8px 20px rgba(155, 135, 199, 0.15);
+            border: 3px solid #8b94f2;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+        
+        .header {
+            background: #8b94f2;
+            color: white;
+            padding: 30px;
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .nav-tabs {
+            border-bottom: 3px solid #f8f9fa;
+            padding: 0 30px;
+            background: white;
+        }
+        
+        .nav-tabs .nav-link {
+            color: #6c757d;
+            font-weight: 600;
+            padding: 15px 25px;
+            border: none;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: #3b82f6;
+            background: none;
+            border-bottom-color: #3b82f6;
+        }
+        
+        .tab-content {
+            padding: 30px;
+        }
+        
+        .flight-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #3b82f6;
+            border: 1px solid #e2e8f0;
+            transition: box-shadow 0.2s ease;
+        }
+        
+        .flight-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .price-badge {
+            background: #2563eb;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .route-info {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .flight-details {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background: #2563eb;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+        }
+        
+        .btn-danger {
+            background: #2563eb;
+            border: none;
+            border-radius: 25px;
+            padding: 8px 20px;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 12px 15px;
+        }
+        
+        .form-control:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4ecdc4;
+            margin-bottom: 10px;
+        }
+        
+        .destination-header {
+            background: #2563eb;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px 15px 0 0;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #dee2e6;
+        }
+        
+        /* Enhanced Voice Control & Filter Styling */
+        .voice-control-panel {
+            background: #2563eb;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .voice-btn-active {
+            background: #dc2626 !important;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+            animation: pulse-red 2s infinite;
+        }
+        
+        .voice-btn-inactive {
+            background: #16a34a !important;
+            transform: scale(1);
+            box-shadow: 0 3px 10px rgba(39, 174, 96, 0.3);
+        }
+        
+        @keyframes pulse-red {
+            0% { box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4); }
+            50% { box-shadow: 0 8px 25px rgba(231, 76, 60, 0.8); }
+            100% { box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4); }
+        }
+        
+        .filter-row {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .filter-active {
+            border-left: 5px solid #4ecdc4;
+            background: #f0f9ff;
+        }
+        
+        .form-control:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+        }
+        
+        .form-control.has-value {
+            border-color: #27ae60;
+            background-color: #f8fff9;
+        }
+        
+        .destination-cyprus { background: #dc2626; color: white; padding: 4px 8px; border-radius: 8px; }
+        .destination-malta { background: #0891b2; color: white; padding: 4px 8px; border-radius: 8px; }
+        .destination-tenerife { background: #059669; color: white; padding: 4px 8px; border-radius: 8px; }
+        .destination-crete { background: #7c3aed; color: white; padding: 4px 8px; border-radius: 8px; }
+        .destination-athens { background: #c2410c; color: white; padding: 4px 8px; border-radius: 8px; }
+        .destination-turkey { background: #0d9488; color: white; padding: 4px 8px; border-radius: 8px; }
+        
+        .airline-british { color: #1e3a8a; font-weight: 600; }
+        .airline-emirates { color: #dc2626; font-weight: 600; }
+        .airline-qatar { color: #7c2d12; font-weight: 600; }
+        .airline-turkish { color: #dc2626; font-weight: 600; }
+        .airline-virgin { color: #e11d48; font-weight: 600; }
+        
+        .price-excellent { background: #059669; }
+        .price-good { background: #2563eb; }
+        .price-fair { background: #d97706; }
+        .price-high { background: #dc2626; }
+        
+        .deal-score-excellent { background: #10b981; }
+        .deal-score-good { background: #3b82f6; }
+        .deal-score-fair { background: #f59e0b; }
+        .deal-score-poor { background: #ef4444; }
+        
+        .status-new { 
+            background: #059669;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .status-saved { 
+            background: #2563eb;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .status-dismissed { 
+            background: #64748b;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-container">
+            <div class="header">
+                <h1><i class="fas fa-plane"></i> Flight Price Tracker</h1>
+                <p>Track real flight prices from Skyscanner, Google Flights & more</p>
+                <div style="margin-top: 15px;">
+                    <a href="/deals.html" class="btn" style="background: rgba(255,255,255,0.3); color: white; text-decoration: none; padding: 10px 20px; border-radius: 20px; margin-right: 10px; font-weight: bold;">
+                        🎯 Auto Discovery
+                    </a>
+                    <a href="/auto-import.html" class="btn" style="background: rgba(255,255,255,0.2); color: white; text-decoration: none; padding: 8px 16px; border-radius: 20px; margin-right: 10px;">
+                        🚀 Auto Import
+                    </a>
+                    <a href="/bookmarklet.html" class="btn" style="background: rgba(255,255,255,0.2); color: white; text-decoration: none; padding: 8px 16px; border-radius: 20px;">
+                        📊 Get Bookmarklet
+                    </a>
+                </div>
+            </div>
+            
+            <ul class="nav nav-tabs" id="mainTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="add-tab" data-bs-toggle="tab" data-bs-target="#add-flight" type="button" role="tab">
+                        <i class="fas fa-plus"></i> Add Flight
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="best-tab" data-bs-toggle="tab" data-bs-target="#best-deals" type="button" role="tab">
+                        <i class="fas fa-star"></i> Best Deals
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="destinations-tab" data-bs-toggle="tab" data-bs-target="#destinations" type="button" role="tab">
+                        <i class="fas fa-globe"></i> By Destination
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="auto-deals-tab" data-bs-toggle="tab" data-bs-target="#auto-deals" type="button" role="tab">
+                        <i class="fas fa-magic"></i> Auto Deals
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="search-tab" data-bs-toggle="tab" data-bs-target="#search" type="button" role="tab">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </li>
+            </ul>
+            
+            <div class="tab-content" id="mainTabContent">
+                <!-- Add Flight Tab -->
+                <div class="tab-pane fade show active" id="add-flight" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h3><i class="fas fa-plus-circle text-primary"></i> Add New Flight Price</h3>
+                            <p class="text-muted">Found a good deal on Skyscanner or Google Flights? Add it here!</p>
+                            
+                            <form id="addFlightForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label"><i class="fas fa-plane-departure"></i> From</label>
+                                        <input type="text" class="form-control" id="origin" placeholder="e.g., LHR, Heathrow, London" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label"><i class="fas fa-plane-arrival"></i> To</label>
+                                        <input type="text" class="form-control" id="destination" placeholder="e.g., LCA, Cyprus, Tenerife" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label"><i class="fas fa-pound-sign"></i> Total Price</label>
+                                        <input type="number" class="form-control" id="price" placeholder="1500" step="0.01" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label"><i class="fas fa-users"></i> Passengers</label>
+                                        <input type="text" class="form-control" id="passengers" placeholder="2 adults + 2 children">
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label"><i class="fas fa-calendar-alt"></i> Departure Date</label>
+                                        <input type="date" class="form-control" id="departureDate">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label"><i class="fas fa-calendar-check"></i> Return Date</label>
+                                        <input type="date" class="form-control" id="returnDate">
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label"><i class="fas fa-plane"></i> Airline</label>
+                                        <input type="text" class="form-control" id="airline" placeholder="e.g., British Airways, Emirates">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label"><i class="fas fa-globe-europe"></i> Source Website</label>
+                                        <select class="form-control" id="source">
+                                            <option value="">Select source...</option>
+                                            <option value="Skyscanner">Skyscanner</option>
+                                            <option value="Google Flights">Google Flights</option>
+                                            <option value="Kayak">Kayak</option>
+                                            <option value="Momondo">Momondo</option>
+                                            <option value="Expedia">Expedia</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-sticky-note"></i> Notes</label>
+                                    <textarea class="form-control" id="notes" rows="3" placeholder="e.g., Direct flight, includes bags, package deal available..."></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-save"></i> Save Flight Price
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="stats-card">
+                                <div class="stats-number" id="totalFlights">0</div>
+                                <div>Total Flights Saved</div>
+                            </div>
+                            
+                            <div class="stats-card">
+                                <div class="stats-number" id="cheapestPrice">£0</div>
+                                <div>Cheapest Flight Found</div>
+                            </div>
+                            
+                            <div class="alert alert-info">
+                                <h6><i class="fas fa-lightbulb"></i> Pro Tips:</h6>
+                                <ul class="mb-0 small">
+                                    <li>Try different UK airports (LHR, LGW, STN, MAN)</li>
+                                    <li>Mid-week departures are usually cheaper</li>
+                                    <li>Set up price alerts on booking sites</li>
+                                    <li>Compare packages vs flights-only</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Best Deals Tab -->
+                <div class="tab-pane fade" id="best-deals" role="tabpanel">
+                    <h3><i class="fas fa-star text-warning"></i> Your Best Flight Deals</h3>
+                    <p class="text-muted">Top 10 cheapest flights you've saved</p>
+                    
+                    <div id="bestDealsContent">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin fa-2x"></i>
+                            <p>Loading your best deals...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Destinations Tab -->
+                <div class="tab-pane fade" id="destinations" role="tabpanel">
+                    <h3><i class="fas fa-globe text-info"></i> Flights by Destination</h3>
+                    <p class="text-muted">All your saved flights organized by destination</p>
+                    
+                    <div id="destinationsContent">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin fa-2x"></i>
+                            <p>Loading destinations...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Auto Deals Tab -->
+                <div class="tab-pane fade" id="auto-deals" role="tabpanel">
+                    <h3><i class="fas fa-magic text-success"></i> Auto-Discovered Flight Deals</h3>
+                    <p class="text-muted">Flights automatically found by our discovery system - save the best ones to your dashboard!</p>
+                    
+                    <!-- Voice Control Panel -->
+                    <div class="voice-control-panel">
+                        <div class="row align-items-center">
+                            <div class="col-md-9">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-microphone fa-2x me-3"></i>
+                                    <div>
+                                        <h6 class="mb-1">🎤 Voice Control Ready</h6>
+                                        <small><strong>Natural Commands:</strong> "Search flights to Cyprus under 800", "Fill origin London Heathrow"<br>
+                                        <strong>Quick Actions:</strong> "Show cheap flights", "Clear filters", "Save flight"</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 text-end">
+                                <button class="btn voice-btn-inactive" id="voiceControlBtn" onclick="app.toggleVoiceControl()">
+                                    <i class="fas fa-microphone-slash"></i> Start Voice Control
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Filter Controls -->
+                    <div class="filter-row" id="filterRow">
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                <label class="form-label small fw-bold">🌍 Destination</label>
+                                <select class="form-control" id="filterDestination" onchange="app.filterAutoDeals()">
+                                    <option value="">All Destinations</option>
+                                    <option value="Cyprus" class="destination-cyprus">🇨🇾 Cyprus</option>
+                                    <option value="Malta" class="destination-malta">🇲🇹 Malta</option>
+                                    <option value="Tenerife" class="destination-tenerife">🇪🇸 Tenerife</option>
+                                    <option value="Turkey" class="destination-turkey">🇹🇷 Turkey</option>
+                                    <option value="Greece Crete" class="destination-crete">🇬🇷 Crete</option>
+                                    <option value="Greece Athens" class="destination-athens">🇬🇷 Athens</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small fw-bold">✈️ Airline</label>
+                                <select class="form-control" id="filterAirline" onchange="app.filterAutoDeals()">
+                                    <option value="">All Airlines</option>
+                                    <option value="British Airways" class="airline-british">🇬🇧 British Airways</option>
+                                    <option value="Emirates" class="airline-emirates">🇦🇪 Emirates</option>
+                                    <option value="Qatar Airways" class="airline-qatar">🇶🇦 Qatar Airways</option>
+                                    <option value="Turkish Airlines" class="airline-turkish">🇹🇷 Turkish Airlines</option>
+                                    <option value="Virgin Atlantic" class="airline-virgin">🇬🇧 Virgin Atlantic</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small fw-bold">💰 Max Price</label>
+                                <input type="number" class="form-control" id="filterMaxPrice" placeholder="Max £" onchange="app.filterAutoDeals()">
+                                <small class="text-muted">Budget limit</small>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small fw-bold">📊 Status</label>
+                                <select class="form-control" id="filterStatus" onchange="app.filterAutoDeals()">
+                                    <option value="">All Status</option>
+                                    <option value="new">🆕 New Deals</option>
+                                    <option value="saved">💾 Saved</option>
+                                    <option value="dismissed">❌ Dismissed</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small fw-bold">⭐ Deal Score</label>
+                                <select class="form-control" id="filterScore" onchange="app.filterAutoDeals()">
+                                    <option value="">All Scores</option>
+                                    <option value="7">⭐⭐⭐ 7+ Great</option>
+                                    <option value="5">⭐⭐ 5+ Good</option>
+                                    <option value="3">⭐ 3+ Fair</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small fw-bold">🔄 Actions</label>
+                                <button class="btn btn-outline-danger w-100" onclick="app.clearAutoDealsFilters()">
+                                    <i class="fas fa-times"></i> Clear All
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Advanced Filters -->
+                    <div class="filter-row">
+                        <h6 class="mb-3"><i class="fas fa-sliders-h text-primary"></i> Advanced Filters</h6>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold">📅 Departure From</label>
+                                <input type="date" class="form-control" id="filterDateFrom" onchange="app.filterAutoDeals()">
+                                <small class="text-muted">Earliest departure</small>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold">📅 Departure To</label>
+                                <input type="date" class="form-control" id="filterDateTo" onchange="app.filterAutoDeals()">
+                                <small class="text-muted">Latest departure</small>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold">👥 Passengers</label>
+                                <select class="form-control" id="filterPassengers" onchange="app.filterAutoDeals()">
+                                    <option value="">Any Passengers</option>
+                                    <option value="1 adult">👤 1 adult</option>
+                                    <option value="2 adults">👥 2 adults</option>
+                                    <option value="3 adults">👥 3 adults</option>
+                                    <option value="4 adults">👥 4 adults</option>
+                                    <option value="3 adults + 1 child">👨‍👩‍👧 3 adults + 1 child</option>
+                                    <option value="2 adults + 1 child">👨‍👩‍👧 2 adults + 1 child</option>
+                                    <option value="2 adults + 2 children">👨‍👩‍👧‍👦 2 adults + 2 children</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold">⏱️ Trip Duration</label>
+                                <select class="form-control" id="filterDuration" onchange="app.filterAutoDeals()">
+                                    <option value="">Any Duration</option>
+                                    <option value="3-5">🏃‍♂️ 3-5 days (Short)</option>
+                                    <option value="6-8">🚶‍♂️ 6-8 days (Week)</option>
+                                    <option value="7">📅 Exactly 7 days</option>
+                                    <option value="9-14">🏖️ 9-14 days (Holiday)</option>
+                                    <option value="15+">🏝️ 15+ days (Extended)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <div class="alert alert-info">
+                                <h6><i class="fas fa-robot"></i> How Auto-Discovery Works:</h6>
+                                <ul class="mb-0 small">
+                                    <li>Continuously searches for flights to tropical destinations</li>
+                                    <li>Finds deals under your budget (currently £1500 for 3 adults + 1 child)</li>
+                                    <li>Scores deals based on savings and destination popularity</li>
+                                    <li>Updates in real-time as new deals are found</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-success btn-lg w-100" onclick="app.importDiscoveredDeals()">
+                                <i class="fas fa-download"></i> Import New Deals to Dashboard
+                            </button>
+                            <small class="text-muted d-block mt-2">
+                                Adds the best auto-discovered deals to your main flight tracker
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <div id="autoDealsContent">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin fa-2x"></i>
+                            <p>Loading auto-discovered deals...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Search Tab -->
+                <div class="tab-pane fade" id="search" role="tabpanel">
+                    <h3><i class="fas fa-search text-success"></i> Search Your Flights</h3>
+                    <p class="text-muted">Filter your saved flights by destination, price, or source</p>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="searchDestination" placeholder="Destination (e.g., Cyprus)">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="searchOrigin" placeholder="Origin (e.g., LHR)">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" class="form-control" id="searchMaxPrice" placeholder="Max £">
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-control" id="searchSource">
+                                <option value="">All sources</option>
+                                <option value="Skyscanner">Skyscanner</option>
+                                <option value="Google Flights">Google Flights</option>
+                                <option value="Kayak">Kayak</option>
+                                <option value="Momondo">Momondo</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary w-100" onclick="searchFlights()">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="searchResults">
+                        <div class="empty-state">
+                            <i class="fas fa-search"></i>
+                            <h5>Enter search criteria above</h5>
+                            <p>Search your saved flights by destination, origin, price range, or booking source</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

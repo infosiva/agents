@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Tracker Bookmarklet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .bookmarklet {
+            background: #007bff;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .code {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+        .step {
+            background: #e7f3ff;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛫 Flight Tracker Auto-Capture</h1>
+        <p>Automatically capture flight prices from booking websites with one click!</p>
+        
+        <h2>📚 How to Install:</h2>
+        
+        <div class="step">
+            <h3>Step 1: Add the Bookmarklet</h3>
+            <p>Drag this button to your bookmarks bar:</p>
+            <a href="javascript:(function(){var d=document;var s=d.createElement('script');s.src='http://localhost:3000/capture.js';s.onload=function(){FlightCapture.init();};d.head.appendChild(s);})();" class="bookmarklet">📊 Capture Flight</a>
+        </div>
+        
+        <div class="step">
+            <h3>Step 2: Use on Flight Websites</h3>
+            <p>Go to any flight search result page on:</p>
+            <ul>
+                <li>Skyscanner.com</li>
+                <li>Google Flights</li>
+                <li>Kayak.com</li>
+                <li>Momondo.com</li>
+            </ul>
+            <p>Click the "📊 Capture Flight" bookmark to automatically extract flight data!</p>
+        </div>
+        
+        <h2>🔧 Manual Installation (if drag doesn't work):</h2>
+        <ol>
+            <li>Copy this code:</li>
+            <div class="code">
+javascript:(function(){var d=document;var s=d.createElement('script');s.src='http://localhost:3000/capture.js';s.onload=function(){FlightCapture.init();};d.head.appendChild(s);})();
+            </div>
+            <li>Create a new bookmark in your browser</li>
+            <li>Paste the code as the URL</li>
+            <li>Name it "📊 Capture Flight"</li>
+        </ol>
+        
+        <h2>✨ Features:</h2>
+        <ul>
+            <li>🎯 <strong>Auto-detect prices</strong> from flight search results</li>
+            <li>📅 <strong>Extract dates</strong> and flight details</li>
+            <li>✈️ <strong>Identify airlines</strong> and routes automatically</li>
+            <li>💾 <strong>One-click save</strong> to your flight tracker</li>
+            <li>🌐 <strong>Works on major</strong> booking websites</li>
+        </ul>
+        
+        <h2>🚀 How to Use:</h2>
+        <ol>
+            <li>Search for flights on any booking website</li>
+            <li>When you see a good deal, click the "📊 Capture Flight" bookmark</li>
+            <li>Review the auto-filled data in the popup</li>
+            <li>Click "Save" to add it to your tracker</li>
+            <li>Done! No manual typing required!</li>
+        </ol>
+        
+        <div class="step">
+            <h3>⚡ Pro Tip:</h3>
+            <p>Open multiple flight search tabs and use the bookmarklet on each one to quickly build your database of flight options!</p>
+        </div>
+    </div>
+</body>
+</html>

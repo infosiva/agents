@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Flight Deals Discovery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #8b94f2 0%, #9b87c7 100%);
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            color: #2d3748;
+        }
+        
+        .main-container {
+            background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(139, 148, 242, 0.15);
+            border: 2px solid #8b94f2;
+            margin: 20px auto;
+            max-width: 1400px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #8b94f2;
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #60a5fa;
+        }
+        
+        .stats-row {
+            background: #f0f9ff;
+            padding: 25px;
+            border-bottom: 3px solid #93c5fd;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #0891b2 0%, #0e7490 50%, #164e63 100%);
+            color: white;
+            padding: 24px 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            border: 2px solid #60a5fa;
+            transform: translateY(0);
+            transition: all 0.2s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .deal-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 28px;
+            box-shadow: 0 10px 30px rgba(20, 184, 166, 0.15);
+            border: 2px solid #a7f3d0;
+            border-left: 8px solid #14b8a6;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .deal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #5eead4, #2dd4bf, #14b8a6, #0d9488);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .deal-card:hover {
+            box-shadow: 0 20px 50px rgba(20, 184, 166, 0.25);
+            border-color: #5eead4;
+            transform: translateY(-8px) scale(1.01);
+        }
+        
+        .deal-card:hover::before {
+            opacity: 1;
+        }
+        
+        .deal-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .deal-card.great-deal {
+            border-left-color: #ffc107;
+            background: #fefce8;
+        }
+        
+        .price-badge {
+            background: linear-gradient(135deg, #0891b2 0%, #0e7490 50%, #164e63 100%);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .savings-badge {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #92400e 100%);
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .deal-score {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #dc2626;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .route-info {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .deal-details {
+            color: #6c757d;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+        
+        .btn-save {
+            background: linear-gradient(135deg, #0891b2 0%, #0e7490 50%, #164e63 100%);
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            margin-right: 10px;
+        }
+        
+        .btn-dismiss {
+            background: #64748b;
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-new {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-saved {
+            background: #cce7ff;
+            color: #004085;
+        }
+        
+        .status-dismissed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .filter-tabs {
+            background: white;
+            padding: 0 24px;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        
+        .filter-tabs .nav-link {
+            color: #64748b;
+            font-weight: 600;
+            padding: 18px 28px;
+            border: none;
+            border-bottom: 3px solid transparent;
+            border-radius: 12px 12px 0 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .filter-tabs .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: translateX(-50%);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .filter-tabs .nav-link.active {
+            color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(240, 147, 251, 0.05) 100%);
+        }
+        
+        .filter-tabs .nav-link.active::before {
+            width: 80%;
+        }
+        
+        .filter-tabs .nav-link:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.04);
+        }
+        
+        .discovery-status {
+            background: #0891b2;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #dee2e6;
+        }
+        
+        /* Enhanced Deal Card Styling */
+        .deal-card.new-deal {
+            border-left: 5px solid #10b981;
+            background: #f0fdf4;
+            animation: glow-green 3s ease-in-out infinite alternate;
+        }
+        
+        .deal-card.saved-deal {
+            border-left: 5px solid #3b82f6;
+            background: #eff6ff;
+        }
+        
+        .deal-card.dismissed-deal {
+            border-left: 5px solid #6b7280;
+            background: #f9fafb;
+            opacity: 0.7;
+        }
+        
+        @keyframes glow-green {
+            from { box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15); }
+            to { box-shadow: 0 12px 35px rgba(16, 185, 129, 0.25); }
+        }
+        
+        .voice-btn-active-deals {
+            background: #dc2626 !important;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+            animation: pulse-red-deals 2s infinite;
+        }
+        
+        .voice-btn-inactive-deals {
+            background: #16a34a !important;
+            transform: scale(1);
+            box-shadow: 0 3px 10px rgba(39, 174, 96, 0.3);
+        }
+        
+        @keyframes pulse-red-deals {
+            0% { box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4); }
+            50% { box-shadow: 0 8px 25px rgba(231, 76, 60, 0.8); }
+            100% { box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4); }
+        }
+        
+        .destination-cyprus { color: #ff6b6b; font-weight: 700; }
+        .destination-malta { color: #4ecdc4; font-weight: 700; }
+        .destination-tenerife { color: #a8e6cf; font-weight: 700; }
+        .destination-crete { color: #667eea; font-weight: 700; }
+        .destination-athens { color: #f093fb; font-weight: 700; }
+        .destination-turkey { color: #ffd89b; font-weight: 700; }
+        
+        .airline-british-airways { color: #1e3a8a; font-weight: 600; }
+        .airline-emirates { color: #dc2626; font-weight: 600; }
+        .airline-qatar-airways { color: #7c2d12; font-weight: 600; }
+        .airline-turkish-airlines { color: #dc2626; font-weight: 600; }
+        .airline-virgin-atlantic { color: #e11d48; font-weight: 600; }
+        
+        .price-excellent-deals { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .price-good-deals { background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%); }
+        .price-fair-deals { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .price-high-deals { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+        
+        .deal-score-excellent { 
+            background: #059669;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .deal-score-good { 
+            background: linear-gradient(135deg, #0891b2 0%, #0e7490 50%, #164e63 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .deal-score-fair { 
+            background: #d97706;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .deal-score-poor { 
+            background: #dc2626;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .notification-status {
+            background: #64748b;
+            color: white;
+            padding: 18px 28px;
+            border-radius: 18px;
+            margin-bottom: 24px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(100, 116, 139, 0.25);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .notification-status.active {
+            background: #0284c7;
+            box-shadow: 0 8px 32px rgba(6, 182, 212, 0.35);
+        }
+        
+        .notification-btn-active {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%) !important;
+            transform: scale(1.02);
+            box-shadow: 0 8px 32px rgba(6, 182, 212, 0.4);
+            animation: pulse-blue 2s infinite;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .notification-btn-inactive {
+            background: #64748b !important;
+            transform: scale(1);
+            box-shadow: 0 6px 24px rgba(100, 116, 139, 0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 8px 32px rgba(6, 182, 212, 0.4), 0 0 0 0 rgba(6, 182, 212, 0.4); }
+            50% { box-shadow: 0 12px 48px rgba(6, 182, 212, 0.6), 0 0 0 8px rgba(6, 182, 212, 0.1); }
+            100% { box-shadow: 0 8px 32px rgba(6, 182, 212, 0.4), 0 0 0 0 rgba(6, 182, 212, 0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-container">
+            <div class="header">
+                <h1><i class="fas fa-search"></i> Auto Flight Discovery</h1>
+                <p>Automatically finding the best flight deals for your family</p>
+                <div style="margin-top: 15px;">
+                    <button id="discoveryToggle" class="btn" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 12px 25px; border-radius: 25px; margin-right: 10px;">
+                        <i class="fas fa-play"></i> Start Discovery
+                    </button>
+                    <a href="/" class="btn" style="background: rgba(255,255,255,0.2); color: white; text-decoration: none; padding: 12px 25px; border-radius: 25px;">
+                        <i class="fas fa-home"></i> Back to Tracker
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Stats Row -->
+            <div class="stats-row">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalDeals">0</div>
+                            <div>Total Deals</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="stat-card">
+                            <div class="stat-number" id="newDeals">0</div>
+                            <div>New Deals</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="stat-card">
+                            <div class="stat-number" id="savedDeals">0</div>
+                            <div>Saved Deals</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="stat-card">
+                            <div class="stat-number" id="avgPrice">£0</div>
+                            <div>Average Price</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-success w-100 h-100" id="voiceControlBtnDeals" onclick="app.toggleVoiceControl()" style="min-height: 80px;" title="Voice Commands: 'start discovery', 'show new deals', 'save deal', 'type budget 1000'">
+                            <i class="fas fa-microphone-slash"></i><br>Voice Control
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-info w-100 h-100" id="notificationBtn" onclick="app.toggleNotifications()" style="min-height: 80px;">
+                            <i class="fas fa-bell-slash"></i><br>Notifications
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="discovery-status" id="discoveryStatus">
+                            <i class="fas fa-pause"></i> Discovery Stopped
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="notification-status" id="notificationStatus">
+                            <i class="fas fa-bell-slash"></i> Notifications Off
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filter Tabs -->
+            <ul class="nav nav-tabs filter-tabs" id="dealTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="new-tab" data-bs-toggle="tab" data-bs-target="#new-deals" type="button" role="tab">
+New Deals <span class="badge bg-primary ms-2" id="newCount">0</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="all-tab" data-bs-toggle="tab" data-bs-target="#all-deals" type="button" role="tab">
+All Deals
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="saved-tab" data-bs-toggle="tab" data-bs-target="#saved-deals" type="button" role="tab">
+Saved
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="notifications-tab" data-bs-toggle="tab" data-bs-target="#notification-settings" type="button" role="tab">
+Notifications
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#discovery-settings" type="button" role="tab">
+Settings
+                    </button>
+                </li>
+            </ul>
+            
+            <!-- Deals Content -->
+            <div class="tab-content" style="padding: 30px;">
+                <div class="tab-pane fade show active" id="new-deals" role="tabpanel">
+                    <div id="newDealsContent">
+                        <div class="empty-state">
+                            <i class="fas fa-search"></i>
+                            <h5>No new deals yet</h5>
+                            <p>Click "Start Discovery" to begin finding flight deals automatically!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-pane fade" id="all-deals" role="tabpanel">
+                    <div id="allDealsContent">
+                        <div class="empty-state">
+                            <i class="fas fa-plane"></i>
+                            <h5>No deals discovered yet</h5>
+                            <p>Start the auto-discovery to see flight deals appear here</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-pane fade" id="saved-deals" role="tabpanel">
+                    <div id="savedDealsContent">
+                        <div class="empty-state">
+                            <i class="fas fa-heart"></i>
+                            <h5>No saved deals</h5>
+                            <p>Save deals you're interested in and they'll appear here</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-pane fade" id="notification-settings" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h3>Notification Settings</h3>
+                            <p class="text-muted">Configure how often you want to be notified about new flight deals</p>
+                            
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5>Notification Frequency</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Alert Frequency</label>
+                                            <select class="form-control" id="notificationFrequency">
+                                                <option value="5">Every 5 minutes</option>
+                                                <option value="15" selected>Every 15 minutes</option>
+                                                <option value="30">Every 30 minutes</option>
+                                                <option value="60">Every hour</option>
+                                                <option value="180">Every 3 hours</option>
+                                                <option value="360">Every 6 hours</option>
+                                                <option value="720">Twice daily</option>
+                                                <option value="1440">Daily</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Minimum Deal Score</label>
+                                            <select class="form-control" id="notificationMinScore">
+                                                <option value="3">3+ Fair Deals</option>
+                                                <option value="5" selected>5+ Good Deals</option>
+                                                <option value="7">7+ Great Deals Only</option>
+                                                <option value="8">8+ Excellent Deals Only</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5>Notification Filters</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Only notify for destinations</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="notifyCyprus" checked>
+                                                <label class="form-check-label" for="notifyCyprus">Cyprus</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="notifyMalta" checked>
+                                                <label class="form-check-label" for="notifyMalta">Malta</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="notifyTenerife" checked>
+                                                <label class="form-check-label" for="notifyTenerife">Tenerife</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Maximum budget per deal</label>
+                                            <input type="number" class="form-control" id="notificationMaxPrice" value="1500" min="500" max="5000" step="50">
+                                            <small class="text-muted">Only notify for deals under this price</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary btn-lg" onclick="app.saveNotificationSettings()">
+                                    Save Notification Settings
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>How Notifications Work</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Browser Notifications:</strong> Get desktop notifications when new deals are found.</p>
+                                    <p><strong>Smart Filtering:</strong> Only get notified about deals that match your criteria.</p>
+                                    <p><strong>Frequency Control:</strong> Choose how often to check for new deals.</p>
+                                    <p><strong>Quality Control:</strong> Filter by deal score to avoid notification spam.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <h5>Notification Stats</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <strong>Status:</strong> <span id="notificationStatusText">Disabled</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Last Check:</strong> <span id="lastNotificationCheck">Never</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Deals Found Today:</strong> <span id="dealsFoundToday">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-pane fade" id="discovery-settings" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h3>Discovery Settings</h3>
+                            <p class="text-muted">Configure what kinds of deals the auto-discovery system should find</p>
+                            
+                            <form id="discoverySettingsForm">
+                                <!-- Travel Preferences -->
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5>Travel Group</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Adults</label>
+                                                <select class="form-control" id="settingsAdults">
+                                                    <option value="1">1 Adult</option>
+                                                    <option value="2" selected>2 Adults</option>
+                                                    <option value="3">3 Adults</option>
+                                                    <option value="4">4 Adults</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Children</label>
+                                                <select class="form-control" id="settingsChildren">
+                                                    <option value="0">No Children</option>
+                                                    <option value="1" selected>1 Child</option>
+                                                    <option value="2">2 Children</option>
+                                                    <option value="3">3 Children</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Budget & Pricing -->
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5>Budget & Pricing</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Maximum Budget (Total)</label>
+                                                <input type="number" class="form-control" id="settingsMaxBudget" value="1500" min="500" max="5000" step="50">
+                                                <small class="text-muted">Only find deals under this total price</small>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Minimum Deal Score</label>
+                                                <select class="form-control" id="settingsMinScore">
+                                                    <option value="3">3+ Fair Deals</option>
+                                                    <option value="5" selected>5+ Good Deals</option>
+                                                    <option value="7">7+ Great Deals Only</option>
+                                                    <option value="8">8+ Excellent Deals Only</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Date Preferences -->
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5>Travel Dates</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label class="form-label">Earliest Departure</label>
+                                                <input type="date" class="form-control" id="settingsStartDate" value="2025-08-15">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Latest Return</label>
+                                                <input type="date" class="form-control" id="settingsEndDate" value="2025-10-31">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label">Trip Duration</label>
+                                                <select class="form-control" id="settingsDuration">
+                                                    <option value="any">Any Duration</option>
+                                                    <option value="3-5">3-5 Days (Short Break)</option>
+                                                    <option value="6-8">6-8 Days (Week Trip)</option>
+                                                    <option value="7" selected>Exactly 7 Days</option>
+                                                    <option value="9-14">9-14 Days (Long Holiday)</option>
+                                                    <option value="14+">14+ Days (Extended Stay)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Destination Preferences -->
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5>Destinations</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="form-label">Search These Destinations</label>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="destCyprus" checked>
+                                                            <label class="form-check-label" for="destCyprus">Cyprus</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="destMalta" checked>
+                                                            <label class="form-check-label" for="destMalta">Malta</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="destTenerife" checked>
+                                                            <label class="form-check-label" for="destTenerife">Tenerife</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="destCrete" checked>
+                                                            <label class="form-check-label" for="destCrete">Crete, Greece</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="destAthens" checked>
+                                                            <label class="form-check-label" for="destAthens">Athens, Greece</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="destTurkey">
+                                                            <label class="form-check-label" for="destTurkey">Turkey</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="destPortugal">
+                                                            <label class="form-check-label" for="destPortugal">Portugal</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="destSpain">
+                                                            <label class="form-check-label" for="destSpain">Spain</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Airline Preferences -->
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5>Airline Preferences</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Preferred Airlines (Optional)</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="airlineBritish">
+                                                    <label class="form-check-label" for="airlineBritish">British Airways</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="airlineVirgin">
+                                                    <label class="form-check-label" for="airlineVirgin">Virgin Atlantic</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="airlineEmirates">
+                                                    <label class="form-check-label" for="airlineEmirates">Emirates</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Maximum Stops</label>
+                                                <select class="form-control" id="settingsMaxStops">
+                                                    <option value="any">Any Stops</option>
+                                                    <option value="0">Direct Only</option>
+                                                    <option value="1" selected>Up to 1 Stop</option>
+                                                    <option value="2">Up to 2 Stops</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        Update Discovery Settings
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary btn-lg ms-2" onclick="app.loadCurrentSettings()">
+                                        Reset to Current
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>How It Works</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Live Discovery:</strong> Changes take effect immediately when you update settings.</p>
+                                    <p><strong>Smart Filtering:</strong> Only deals matching your criteria will be found and saved.</p>
+                                    <p><strong>Budget Control:</strong> Set your maximum budget to avoid expensive deals.</p>
+                                    <p><strong>Quality Scores:</strong> Filter by deal quality to see only the best offers.</p>
+                                    <p><strong>Date Flexibility:</strong> Define your travel window for maximum savings.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <h5>Current Stats</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <strong>Active Searches:</strong> <span id="activeSearches">0</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Search Configs:</strong> <span id="searchConfigs">0</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Last Updated:</strong> <span id="lastUpdated">Never</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="deals.js"></script>
+</body>
+</html>
